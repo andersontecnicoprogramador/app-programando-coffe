@@ -1,0 +1,391 @@
+
+ATUALIZAÇÃO DO EXPO - Documentação -> https://expo.dev/
+
+
+Criação do Projeto 
+	-> npx create-expo-app nome_projeto
+
+Acessar o Projeto via cmd
+
+Execute o comando abaixo para utilizar menos arquivos
+	-> npm run reset-project
+
+Executar o Projeto
+	-> npx expo start
+
+Para visualização do navegador não precisa instalar dependências...
+
+----------------------------------------
+
+NAVEGAÇÃO - Expo Router
+
+PILHA - https://docs.expo.dev/router/advanced/stack/
+
+----------------------------------------
+*******
+app/_layout.js
+
+
+
+import { Stack } from "expo-router";
+
+export default function RootLayout() {
+  return (
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#010101",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
+        headerTitleAlign: "center", // Centraliza o título na barra de navegação
+      }}
+    >
+      {/* <Stack.Screen name="index" options={{ headerShown: false }} /> */}
+      <Stack.Screen name="index" options={{ title: "Coffe WP" }} />
+      <Stack.Screen name="products" options={{ title: "Menu WP" }} />
+    </Stack>
+  );
+}
+
+
+
+
+************
+app/index.js
+
+import { Text, View, Image, Pressable, StyleSheet } from "react-native";
+import { Link } from 'expo-router';
+
+export default function Index() {
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#260F0D'
+      }}
+    >
+
+      <Text
+        style={{ fontWeight: 'bold', marginBottom: 20, marginTop: 20, color: '#fff', fontSize: 20 }}
+      >
+        Coffe with Programation
+      </Text>
+
+      <Image
+        style={{
+          width: 300,
+          height: 300,
+          borderRadius: 300
+        }}
+        source={require('../assets/images/coffe.jpg')}
+      />
+
+      <Text
+        style={{ fontWeight: 'bold', marginBottom: 20, marginTop: 20, color: '#fff', fontSize: 20 }}
+      >{'</> {...} function'}</Text>
+
+      
+      <Link href="/products" style={styles.button} asChild>
+        <Pressable >
+
+          <Text style={styles.buttonText}>
+            Acessar Coffe WP
+          </Text>
+
+        </Pressable>
+      </Link>
+
+
+
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+
+  button: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    margin: 20,
+    backgroundColor: '#F2D8C2',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 15,
+
+  },
+  buttonText: {
+    fontSize: 18,
+    color: '#010101',
+    fontWeight: 'bold',
+  },
+});
+
+
+
+
+
+*******
+app/products
+
+
+import { Text, ScrollView, View, Image, TouchableOpacity, StyleSheet } from "react-native";
+
+export default function Products() {
+
+    // const ContentList = () => {
+    // Dados de exemplo para os itens da lista
+    const listProduct = [
+        {
+            id: 1,
+            title: 'Expresso',
+            description: 'Assim como o expresso é a base para muitas bebidas de café, C é uma linguagem fundamental amplamente usada como base para muitas outras linguagens de programação.',
+            image: '../assets/images/coffe/coffe-1.png', // URL da imagem de exemplo
+        },
+        {
+            id: 2,
+            title: 'Latte',
+            description: 'O Python é conhecido por sua simplicidade e sua capacidade de "suavizar" o processo de programação, assim como o leite suaviza o sabor do café no latte',
+            image: '../assets/images/coffe/coffe-2.png', // URL da imagem de exemplo
+        },
+        {
+            id: 3,
+            title: 'Cappuccino',
+            description: 'Java é robusto e fortemente tipado, assim como o cappuccino é uma mistura equilibrada de café e leite',
+            image: '../assets/images/coffe/coffe-3.png', // URL da imagem de exemplo
+        },
+        {
+            id: 4,
+            title: 'Mocha',
+            description: 'Assim como o mocha é uma combinação de café e chocolate, JavaScript combina elementos de várias linguagens e é versátil em aplicação, assim como o mocha é versátil em sabor',
+            image: '../assets/images/coffe/coffe-4.png', // URL da imagem de exemplo
+        },
+        {
+            id: 5,
+            title: 'Macchiato',
+            description: 'Swift é moderno, ágil e focado no desenvolvimento para dispositivos Apple, assim como o macchiato é uma variação focada e concentrada de café',
+            image: '../assets/images/coffe/coffe-5.png', // URL da imagem de exemplo
+        },
+        {
+            id: 6,
+            title: 'Affogato',
+            description: 'Ruby é conhecido por sua elegância e é frequentemente usado para criar aplicações web interativas, assim como o affogato combina café e sorvete de maneira única',
+            image: '../assets/images/coffe/coffe-6.png', // URL da imagem de exemplo
+        },
+    ];
+
+    return (
+
+        <ScrollView style={styles.container}>
+            <Text style={styles.title}>
+                Nossos cafés e Linguagens
+            </Text>
+            
+            {listProduct.map((item) => (
+                <View key={item.id} style={styles.itemContainer}>
+                    <Image source={{ uri: item.image }} style={styles.image} />
+                    <View style={styles.textContainer}>
+                        <Text style={styles.titleProduct}>{item.title}</Text>
+                        <Text style={styles.description}>{item.description}</Text>
+                    </View>
+                </View>                
+            ))}
+
+        </ScrollView>
+    );
+}
+
+const styles = StyleSheet.create({
+    title: {
+        textAlign: 'center', fontWeight: 'bold', marginBottom: 20, marginTop: 20,
+        color: '#fff', fontSize: 20
+    },
+    container: {
+        flex: 1,
+        padding: 20,
+        backgroundColor: '#260F0D',
+    },
+    itemContainer: {
+        flexDirection: 'row',
+        marginBottom: 20,
+        backgroundColor: '#F2D8C2',
+        borderRadius: 8,
+        padding: 10,
+    },
+    image: {
+        width: 100,
+        height: 100,
+        borderRadius: 8,
+    },
+    textContainer: {
+        flex: 1,
+        marginLeft: 10,
+    },
+    titleProduct: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    description: {
+        marginTop: 5,
+        fontSize: 14,
+    },
+});
+
+
+
+======================================================
+
+
+Git HUB 
+
+1. Crie uma conta no GIT HUB
+
+2. Crie um Repositório no Git Hub
+
+3. Acesse A pasta do projeto em seu computador com o botão direito sobre ela -> Git Bash Here
+
+
+Iniciar o Git
+	git init
+
+Configurar Nome de Usuário
+	git config --global user.name “Nelci Mariano”​
+
+Configurar E-mail
+	git config --global user.email “professornelcimariano@gmail.com”
+
+Verificar e-mail de usuário (Escreva o comando no git pois ele pode não reconhecer ao copiar e colar)
+	git config user.email​
+
+	git config user.name
+
+Ver status dos arquivos
+	git status
+
+
+Vincular repositório local com um repositório remoto​
+	git remote add origin + (url do repositósio no GitHub) https://github.com/professornelcimariano/projeto_aula_git.git​
+
+	git remote add origin https://github.com/professornelcimariano/projeto_django2.git
+
+Exibe as conexões com o github
+	git remote -v
+
+Exibe os status dos arquivos com o Git
+	git status
+
+
+
+** Em caso de error -> remova o Origin
+	git remote remove origin
+
+Crie o arquivo .gitignore para que arquivos específicos não sejam enviados para o git
+	.gitignore
+
+Adicionar arquivos na zona intermediária
+	git add .
+
+
+Commit
+	git commit -m "comentário qualquer"​
+
+	git commit -m "1º Commit do Projeto"
+
+
+
+Enviar arquivos para o GitHub
+	git push -u origin master
+ou
+	git push -u origin main
+
+
+Faça uma alteração em um arquivo do projeto, salve e execute o comando git diff
+Exibir alterações no arquivo
+	git diff​
+		Para sair do comando git diff, pode pressionar Q maiúsculo
+
+
+Clonar Repositório
+	git clone https://github.com/viniciuswebdev/curso-php-phpunit.git		
+
+
+
+
+==========================================
+
+
+
+BANCO DE IMAGENS
+
+
+Sites de Imagens Gratuitas
+
+Unsplash - unsplash.com
+
+Pexels - pexels.com
+
+Pixabay - pixabay.com
+
+Freepik - freepik.com
+
+Burst by Shopify - burst.shopify.com
+
+StockSnap - stocksnap.io
+
+Kaboompics - kaboompics.com
+
+Reshot - reshot.com
+
+LibreShot - libreshot.com
+
+Picjumbo - picjumbo.com
+
+Life of Pix - lifeofpix.com
+
+Morguefile - morguefile.com
+
+Foodiesfeed - foodiesfeed.com
+
+Gratisography - gratisography.com
+
+Flickr Commons - flickr.com/commons
+
+New Old Stock - nos.twnsnd.co
+
+Skitterphoto - skitterphoto.com
+
+Picspree - picspree.com
+
+Jay Mantri - jaymantri.com
+
+ISO Republic - isorepublic.com
+
+------------------------------------
+
+Sites de Imagens Pagas
+
+Shutterstock - shutterstock.com
+
+Adobe Stock - stock.adobe.com
+
+Getty Images - gettyimages.com
+
+iStock - istockphoto.com
+
+Dreamstime - dreamstime.com
+
+Depositphotos - depositphotos.com
+
+123RF - 123rf.com
+
+Alamy - alamy.com
+
+Canva - canva.com
+
+Envato Elements - elements.envato.com
